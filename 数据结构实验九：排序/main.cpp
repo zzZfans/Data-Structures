@@ -5,7 +5,7 @@
 using namespace std;
 using namespace chrono;
 
-const int Size = 10000;//整数个数
+const int Size = 60000;//整数个数
 
 int main() {
     srand((unsigned) time(nullptr));
@@ -18,10 +18,10 @@ int main() {
         arr[i] = (rand() % (max - min + 1)) + min;
     }
 
-    int arrTemp01[Size], arrTemp02[Size], arrTemp03[Size], arrTemp04[Size], arrTemp05[Size];
-    int *arrTemps[] = {arrTemp01, arrTemp02, arrTemp03, arrTemp04, arrTemp05};
+    int arrTemp01[Size], arrTemp02[Size], arrTemp03[Size], arrTemp04[Size], arrTemp05[Size], arrTemp06[Size], arrTemp07[Size];
+    int *arrTemps[] = {arrTemp01, arrTemp02, arrTemp03, arrTemp04, arrTemp05, arrTemp06, arrTemp07};
 
-    for (int j = 0; j < 5; ++j) {
+    for (int j = 0; j < 7; ++j) {
         for (int i = 0; i < Size; ++i) {
             arrTemps[j][i] = arr[i];
         }
@@ -76,6 +76,28 @@ int main() {
     end = system_clock::now();
     duration = duration_cast<microseconds>(end - start);
     cout << "希尔排序的比较次数：" << result.first << "   移动次数：" << result.second
+         << "   总耗时："
+         << (double(duration.count()) * microseconds::period::num / microseconds::period::den) * 1000
+         << "ms"
+         << endl;
+
+    int CT = 0, TOM = 0;
+    start = system_clock::now();
+    sorter.QuickSort(arrTemps[5], 0, Size - 1, CT, TOM);
+    end = system_clock::now();
+    duration = duration_cast<microseconds>(end - start);
+    cout << "快速排序的比较次数：" << CT << "   移动次数：" << TOM
+         << "   总耗时："
+         << (double(duration.count()) * microseconds::period::num / microseconds::period::den) * 1000
+         << "ms"
+         << endl;
+
+    CT = 0, TOM = 0;
+    start = system_clock::now();
+    sorter.heap_sort(arrTemps[6], Size, CT, TOM);
+    end = system_clock::now();
+    duration = duration_cast<microseconds>(end - start);
+    cout << "堆排序的比较次数：" << CT << "   移动次数：" << TOM
          << "   总耗时："
          << (double(duration.count()) * microseconds::period::num / microseconds::period::den) * 1000
          << "ms"
